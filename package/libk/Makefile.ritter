@@ -1,0 +1,11 @@
+PKG_SOURCE_URL:=https://github.com/mkschreder/libk.git
+PKG_SOURCE_VERSION:=a47388231976df91d56162fcbc67c10e2cb75d98
+
+define Package/install
+	$(INSTALL_DIR) $(2)/usr/lib/
+	$(CP) $(1)/src/.libs/libk.a $(2)/usr/lib/
+	$(INSTALL_DIR) $(2)/usr/include/libk/
+	(cd $(1)/src/ && find . -name '*.h' -print | tar --create --files-from -) | (cd $(2)/usr/include/libk/ && tar xfp -) 
+endef
+
+$(eval $(call BuildPackage,libk))
