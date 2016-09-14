@@ -21,8 +21,6 @@
 
 #pragma once 
 
-#include "config.h"
-
 #define wrap_pi(x) (x < -M_PI ? x+M_PI*2 : (x > M_PI ? x - M_PI*2: x))
 
 static inline long map(long x, long in_min, long in_max, long out_min, long out_max)

@@ -22,11 +22,10 @@
 
 #pragma once
 
-#include <kernel/device.h>
-#include <kernel/driver.h>
-#include <kernel/types.h>
-#include <kernel/list.h>
-#include <i2c/i2c.h>
+#include <utype/list.h>
+#include "driver.h"
+#include "types.h"
+#include "i2c.h"
 
 struct memory_device; 
 struct memory_device_ops {

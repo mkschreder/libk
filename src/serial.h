@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <kernel/types.h>
-#include <kernel/errno.h>
-#include <kernel/list.h>
+#include "types.h"
+#include "errno.h"
+#include <utype/list.h>
 
 struct serial_device; 
 struct serial_device_ops {

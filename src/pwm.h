@@ -20,7 +20,7 @@
 	Github: https://github.com/mkschreder
 */
 
-#include <kernel/list.h>
+#include <utype/list.h>
 
 struct pwm_device_info {
 	uint16_t channels_available; 

@@ -1,17 +1,12 @@
 #pragma once
 
-#include "config.h"
-
-#ifdef CONFIG_FREERTOS
-#define HAVE_THREADS
-
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-#include "freertos/croutine.h"
-#include "freertos/timers.h"
-#include "freertos/semphr.h"
-#include "freertos/port.h"
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/queue.h>
+#include <freertos/croutine.h>
+#include <freertos/timers.h>
+#include <freertos/semphr.h>
+#include <freertos/port.h>
 
 /* Following are convenience definitions for efficient use of most common constructs */
 
@@ -57,8 +52,7 @@ static inline void* kzmalloc(size_t size) {
 	return ret; 
 }
 
-#else
-
+#if 0
 typedef char mutex_t; 
 typedef char sem_t; 
 

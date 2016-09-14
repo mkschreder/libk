@@ -17,8 +17,7 @@
 
 #pragma once
 
-#include <kernel/types.h>
-#include <kernel/list.h>
+#include <utype/list.h>
 
 struct adc_device; 
 struct adc_ops {

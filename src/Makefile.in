@@ -121,14 +121,16 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libk_avr_la_LIBADD =
-am_libk_avr_la_OBJECTS = atmega_adc.lo atmega_eeprom.lo atmega_gpio.lo \
-	atmega_i2c.lo atmega_pwm.lo atmega_spi.lo atmega_uart.lo
-libk_avr_la_OBJECTS = $(am_libk_avr_la_OBJECTS)
+libk_la_LIBADD =
+am_libk_la_OBJECTS = libk_la-serial.lo libk_la-threads.lo
+libk_la_OBJECTS = $(am_libk_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+libk_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libk_la_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -163,8 +165,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libk_avr_la_SOURCES)
-DIST_SOURCES = $(libk_avr_la_SOURCES)
+SOURCES = $(libk_la_SOURCES)
+DIST_SOURCES = $(libk_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -283,7 +285,7 @@ host_cpu = @host_cpu@
 host_os = @host_os@
 host_vendor = @host_vendor@
 htmldir = @htmldir@
-includedir = $(prefix)/include/libk/arm32/
+includedir = $(prefix)/include/libk/
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
@@ -305,9 +307,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-lib_LTLIBRARIES = \
-libk-avr.la 
-
+lib_LTLIBRARIES = libk.la 
 include_HEADERS = 
 AM_CFLAGS = $(CODE_COVERAGE_CFLAGS) -std=gnu99 -Wall -Werror -Wno-format-y2k -W -Wstrict-prototypes -Wmissing-prototypes \
 -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch \
@@ -316,19 +316,8 @@ AM_CFLAGS = $(CODE_COVERAGE_CFLAGS) -std=gnu99 -Wall -Werror -Wno-format-y2k -W 
 -Wformat=2 -Wno-format-nonliteral -Wpointer-arith -Wno-missing-braces \
 -Wno-unused-parameter -Wno-unused-variable -Wno-inline
 
-
-#libk_arm32_la_SOURCES=arm_adc.c arm_dma.c arm_gpio.c arm_pwm.c arm_spi.c arm_time.c arm_twi.c arm_uart.c
-#libk_arm32_la_CFLAGS=$(AM_CFLAGS)
-libk_avr_la_SOURCES = \
-atmega_adc.c \
-atmega_eeprom.c \
-atmega_gpio.c \
-atmega_i2c.c \
-atmega_pwm.c \
-atmega_spi.c \
-atmega_uart.c 
-
-libk_arm32_stm32f10x_la_CFLAGS = $(AM_CFLAGS) -DF_CPU=16000000
+libk_la_SOURCES = serial.c threads.c
+libk_la_CFLAGS = $(AM_CFLAGS)
 all: all-am
 
 .SUFFIXES:
@@ -399,8 +388,8 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-libk-avr.la: $(libk_avr_la_OBJECTS) $(libk_avr_la_DEPENDENCIES) $(EXTRA_libk_avr_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(libk_avr_la_OBJECTS) $(libk_avr_la_LIBADD) $(LIBS)
+libk.la: $(libk_la_OBJECTS) $(libk_la_DEPENDENCIES) $(EXTRA_libk_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libk_la_LINK) -rpath $(libdir) $(libk_la_OBJECTS) $(libk_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -408,13 +397,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atmega_adc.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atmega_eeprom.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atmega_gpio.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atmega_i2c.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atmega_pwm.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atmega_spi.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atmega_uart.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libk_la-serial.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libk_la-threads.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -439,6 +423,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+
+libk_la-serial.lo: serial.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libk_la_CFLAGS) $(CFLAGS) -MT libk_la-serial.lo -MD -MP -MF $(DEPDIR)/libk_la-serial.Tpo -c -o libk_la-serial.lo `test -f 'serial.c' || echo '$(srcdir)/'`serial.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libk_la-serial.Tpo $(DEPDIR)/libk_la-serial.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='serial.c' object='libk_la-serial.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libk_la_CFLAGS) $(CFLAGS) -c -o libk_la-serial.lo `test -f 'serial.c' || echo '$(srcdir)/'`serial.c
+
+libk_la-threads.lo: threads.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libk_la_CFLAGS) $(CFLAGS) -MT libk_la-threads.lo -MD -MP -MF $(DEPDIR)/libk_la-threads.Tpo -c -o libk_la-threads.lo `test -f 'threads.c' || echo '$(srcdir)/'`threads.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libk_la-threads.Tpo $(DEPDIR)/libk_la-threads.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='threads.c' object='libk_la-threads.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libk_la_CFLAGS) $(CFLAGS) -c -o libk_la-threads.lo `test -f 'threads.c' || echo '$(srcdir)/'`threads.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

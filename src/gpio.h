@@ -64,6 +64,8 @@ enum {
 /// as a \ref struct parallel_interface
 //pio_dev_t gpio_get_parallel_interface(void); 
 
+typedef uint16_t gpio_pin_t;
+
 struct gpio_adapter; 
 struct gpio_adapter_ops {
 	void (*write_pin)(struct gpio_adapter *self, gpio_pin_t pin, uint8_t val); 	

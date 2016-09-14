@@ -1,5 +1,5 @@
 #include "serial.h"
-#include <kernel/list.h>
+#include <utype/list.h>
 
 //static LIST_HEAD(_devices); 
 struct serial_device *_default_system_console = 0; 

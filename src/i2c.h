@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include <kernel/list.h>
-#include <kernel/driver.h>
+#include <utype/list.h>
+#include "driver.h"
 
 #define I2C_READ    1
 #define I2C_WRITE   0
